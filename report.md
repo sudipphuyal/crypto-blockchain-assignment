@@ -157,3 +157,57 @@ Ed25519, uses a different curve/signature construction and has deterministic
 nonce derivation by design. Schnorr signatures provide simpler algebraic
 properties and enable efficient signature aggregation; Bitcoin introduced
 Schnorr signatures through Taproot.
+
+# Exercise 4 — Merkle Trees and SPV Inclusion Proofs
+
+## Objective
+
+The objective was to construct a Merkle tree from four blockchain-style
+transactions, calculate the Merkle root, demonstrate tamper detection, and
+generate and verify an SPV inclusion proof.
+
+## Merkle Tree Construction
+
+The following transactions were used:
+
+1. Alice -> Bob
+2. Carol -> Dave
+3. Eve -> Frank
+4. Grace -> Harry
+
+Each transaction was first hashed with SHA-256. Pairs of hashes were then
+concatenated and hashed to create parent nodes until a single Merkle root
+was produced.
+
+## Tamper Detection
+
+The second transaction was changed from `Carol -> Dave` to
+`Carol -> Mallory`. This produced a completely different Merkle root.
+Therefore, any transaction modification is detectable because it changes
+the leaf hash, its parent hashes, and finally the root.
+
+## SPV Inclusion Proof
+
+A Merkle proof was generated for `Eve -> Frank`. The proof contained:
+
+- H4, the sibling hash for `Grace -> Harry`
+- H12, the combined hash of the first two transactions
+
+Starting with H3, the verifier calculated H34 and then the final Merkle root.
+The reconstructed root matched the original root, so the inclusion proof was
+valid. When the transaction text was changed, verification failed.
+
+## Scale
+
+For a block containing 1,000,000 transactions, an inclusion proof requires
+approximately ceil(log2(1,000,000)) = 20 sibling hashes. At 32 bytes per
+SHA-256 hash, the hash payload is approximately 640 bytes, plus direction
+metadata. This is why SPV clients can verify inclusion without downloading
+the complete block.
+
+## Ethereum Patricia Merkle Trie
+
+Bitcoin commonly uses a binary Merkle tree to commit a list of transactions.
+Ethereum uses Merkle Patricia Tries because it requires authenticated key-value
+storage for account state, transactions, and receipts. Ethereum block headers
+include `stateRoot`, `transactionsRoot`, and `receiptsRoot`.

@@ -1,0 +1,70 @@
+
+========================================================================
+Exercise 4.1 — Merkle Tree Construction
+========================================================================
+Transactions:
+Tx1: Alice -> Bob
+Tx2: Carol -> Dave
+Tx3: Eve -> Frank
+Tx4: Grace -> Harry
+
+ASCII Merkle Tree:
+Merkle Root: f80a4faab658ada2295b08d8e5a8c20dcb5d30ffd44543338bb36ba6de5c0398
+├── H12: 6de08eb4fd170b3424133e47e78b842d882f53baeb952b0326d75131c4944310
+│   ├── H1: 8c8000772a6d91d2b1363d0852469994ffa36e6bd27f87d6d1e4c38fa9102926  (Alice -> Bob)
+│   └── H2: b70eaffa6d2c126789ee7467c1da874b8a28b922dc9a623e0156e1f0907dfe15  (Carol -> Dave)
+└── H34: ee1ddddddd6cd7efdc0f825641d5047e1d673ada37d0b5af3a98620e6e98ff2f
+    ├── H3: 4b229d10aa143db0c221a73ed4aa8af7adb801cea96f86064b4c1cc50c12561d  (Eve -> Frank)
+    └── H4: 113293ab2518da879b5e2c329eeec42d5c10e0f404e31ffacdf1133eb6716349  (Grace -> Harry)
+
+Merkle Root:
+f80a4faab658ada2295b08d8e5a8c20dcb5d30ffd44543338bb36ba6de5c0398
+
+========================================================================
+Tampering Demonstration
+========================================================================
+Original Tx2: Carol -> Dave
+Tampered Tx2: Carol -> Mallory
+
+Original Merkle Root:
+f80a4faab658ada2295b08d8e5a8c20dcb5d30ffd44543338bb36ba6de5c0398
+
+Tampered Merkle Root:
+19342f7ba8709a2821ef5b799a3d9e0a3687177dddc738a9577622c2f04dfb36
+
+Roots are different: True
+Tampering detection check: PASSED
+
+========================================================================
+Exercise 4.2 — SPV Inclusion Proof for Tx3
+========================================================================
+Transaction to prove:
+Eve -> Frank
+
+Proof components:
+Step 1: sibling on the right -> 113293ab2518da879b5e2c329eeec42d5c10e0f404e31ffacdf1133eb6716349
+Step 2: sibling on the left -> 6de08eb4fd170b3424133e47e78b842d882f53baeb952b0326d75131c4944310
+
+Expected Merkle Root:
+f80a4faab658ada2295b08d8e5a8c20dcb5d30ffd44543338bb36ba6de5c0398
+
+Proof verification result: True
+SPV inclusion proof check: PASSED
+
+Verification using altered transaction: False
+Altered transaction rejection check: PASSED
+
+========================================================================
+Merkle Proof Scale Calculation
+========================================================================
+Transactions in block: 1,000,000
+Approximate sibling hashes needed: 20
+Approximate proof hash payload: 640 bytes
+Direction metadata is also needed for each proof step.
+
+========================================================================
+Exercise 4.3 — Ethereum Patricia Merkle Trie
+========================================================================
+Bitcoin commonly uses a binary Merkle tree to commit transactions inside a block.
+Ethereum uses Merkle Patricia Tries for state, transactions, and receipts because it needs authenticated key-value storage, not only a transaction-list commitment.
+The three major Ethereum block-header roots are stateRoot, transactionsRoot, and receiptsRoot.
