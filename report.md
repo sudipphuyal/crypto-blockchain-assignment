@@ -438,3 +438,19 @@ Commit-reveal is one mitigation, although it is not sufficient for every
 application. Future large-scale fault-tolerant quantum computers could threaten
 ECC-based signatures, so post-quantum cryptography is important for long-term
 blockchain security.
+
+## Current Majority-Hashrate Cost Estimate
+
+Using a Bitcoin network hash-rate estimate of 939 EH/s and a displayed
+NiceHash SHA256AsicBoost offer of approximately $2,799.21 for 0.1 EH/s over
+24 hours, the theoretical hash rate needed for 51% is:
+
+`0.51 × 939 EH/s = 478.89 EH/s`
+
+This corresponds to 4,788.9 units of 0.1 EH/s. Extrapolating the displayed
+marketplace price gives an estimated cost of approximately $13.41 million per
+day, or about $558,547 per hour.
+
+This is only a theoretical extrapolation. The marketplace does not provide
+enough available SHA-256 capacity to obtain 51% of the Bitcoin network, so the
+calculation must not be interpreted as a practical attack plan.
