@@ -211,3 +211,81 @@ Bitcoin commonly uses a binary Merkle tree to commit a list of transactions.
 Ethereum uses Merkle Patricia Tries because it requires authenticated key-value
 storage for account state, transactions, and receipts. Ethereum block headers
 include `stateRoot`, `transactionsRoot`, and `receiptsRoot`.
+
+# Exercise 5 — Zero-Knowledge Proofs and Schnorr Identification
+
+## Objective
+
+The objective was to understand completeness, soundness, and zero knowledge;
+simulate the Alibaba cave protocol; implement the Schnorr identification
+protocol; and compare major zero-knowledge technologies used in blockchain.
+
+## The Three ZKP Properties
+
+- **Completeness:** An honest prover who knows the secret should be accepted
+  by the verifier.
+- **Soundness:** A dishonest prover who does not know the secret should have
+  only a very small probability of being accepted.
+- **Zero knowledge:** The verifier learns that the prover knows the secret,
+  but does not learn the secret itself.
+
+## Alibaba Cave Simulation
+
+In the Alibaba cave analogy, a prover who knows the secret door mechanism can
+always exit through the side requested by the verifier. A dishonest prover must
+guess the requested side in advance and has a 1/2 chance of passing each round.
+
+After 10 rounds, the theoretical probability of a dishonest prover passing all
+rounds is:
+
+`(1/2)^10 = 1/1024 ≈ 0.09765625%`
+
+After 30 rounds, the probability becomes:
+
+`(1/2)^30 = 1/1,073,741,824 ≈ 0.000000093132%`
+
+Repeated rounds therefore make successful cheating increasingly improbable.
+
+## Schnorr Identification Protocol
+
+A toy Schnorr protocol was implemented using a small educational group.
+
+1. The prover has private secret `x`.
+2. The public key is `Y = g^x mod p`.
+3. The prover selects random `r` and sends `t = g^r mod p`.
+4. The verifier sends challenge `c`.
+5. The prover sends `s = r + c*x mod q`.
+6. The verifier checks:
+
+`g^s mod p = t * Y^c mod p`
+
+The equality held, demonstrating completeness. The toy values were deliberately
+small and are not secure for real cryptographic use.
+
+## Soundness Illustration
+
+A fake prover attempted to provide a random response without knowing the
+secret. The verification equation normally failed. This illustrates that a
+valid response depends on knowledge of the secret, although formal soundness
+requires cryptographically large parameters and repeated or large challenges.
+
+## Conceptual Shielded Transaction
+
+A conceptual shielded transaction demonstrated the relation:
+
+`input = output + fee`
+
+A real privacy-focused system can prove this relation in zero knowledge without
+revealing amounts or identities. Production systems such as Zcash additionally
+use commitments, nullifiers, encryption, and zk-SNARK proofs. These components
+were not implemented in this educational script.
+
+## Technology Comparison
+
+- **zk-SNARKs:** compact proofs and fast verification; some systems require a
+  trusted setup.
+- **zk-STARKs:** commonly avoid trusted setup and use hash-based methods, but
+  proofs are generally larger.
+- **zkRollups:** aggregate Layer-2 transactions and submit a validity proof to
+  a Layer-1 blockchain.
+- **Bulletproofs:** avoid trusted setup and support efficient range proofs.

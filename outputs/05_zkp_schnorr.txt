@@ -1,0 +1,83 @@
+
+========================================================================
+Exercise 5.1 — Alibaba Cave Simulation
+========================================================================
+Rounds: 10
+Honest prover passes all rounds: True
+Theoretical dishonest success probability: 1 / 2^10 = 0.000976562500
+Theoretical dishonest success percentage: 0.097656250000%
+Simulation runs: 20,000
+Dishonest successful runs: 10
+Estimated success rate: 0.00050000
+
+Rounds: 30
+Honest prover passes all rounds: True
+Theoretical dishonest success probability: 1 / 2^30 = 0.000000000931
+Theoretical dishonest success percentage: 0.000000093132%
+
+
+========================================================================
+Exercise 5.2 — Schnorr Identification Protocol
+========================================================================
+Toy group parameters:
+p = 23
+q = 11
+g = 2
+
+Prover secret and public value:
+Private secret x: 2 (printed only for classroom validation)
+Public key Y = g^x mod p: 4
+
+Protocol messages:
+Prover random nonce r: 3
+Commitment t = g^r mod p: 8
+Verifier challenge c: 6
+Response s = r + c*x mod q: 4
+
+Verifier equation:
+Left side:  g^s mod p = 16
+Right side: t * Y^c mod p = 16
+Verification result: True
+Schnorr proof verification: PASSED
+
+========================================================================
+Soundness Illustration — Random Guess
+========================================================================
+Fake commitment t: 16
+Verifier challenge c: 9
+Guessed response s: 7
+Left side:  g^s mod p = 13
+Right side: t * Y^c mod p = 1
+Random guessed proof accepted: False
+
+========================================================================
+Exercise 5.3 — Conceptual Zcash Shielded Transaction
+========================================================================
+Private values used only for this classroom example:
+Input amount: 10
+Output amount: 9
+Fee: 1
+Balance relation holds: True
+
+Conceptual zero-knowledge statement:
+The prover can prove that committed inputs equal committed outputs plus the transaction fee, without publicly revealing the amounts or the participating identities.
+A real shielded Zcash transaction additionally uses cryptographic commitments, nullifiers, encryption, and a zk-SNARK proof. This script does not implement those production mechanisms.
+
+========================================================================
+ZKP Technology Comparison
+========================================================================
+zk-SNARKs:
+- Usually produce compact proofs and fast verification.
+- Some constructions require a trusted setup.
+
+zk-STARKs:
+- Avoid trusted setup in common designs and use hash-based techniques.
+- Proofs are generally larger than zk-SNARK proofs.
+
+zkRollups:
+- Batch many Layer-2 transactions and publish a validity proof to Layer 1.
+- Improve scalability while inheriting Layer-1 verification.
+
+Bulletproofs:
+- Do not require trusted setup.
+- Often used for efficient range proofs, such as proving a value is within an allowed range without revealing the value.
