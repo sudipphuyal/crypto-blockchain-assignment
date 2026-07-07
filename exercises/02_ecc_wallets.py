@@ -264,29 +264,33 @@ def main() -> None:
     assert wallet.bitcoin_address.startswith("1")
     assert wallet.ethereum_address.startswith("0x")
     assert len(wallet.ethereum_address) == 42
+    assert wallet.wif.startswith(("K", "L"))
 
-    print("\nBasic checks: PASSED")
 
-    print_section("Exercise 2.2 — Discrete Logarithm Interpretation")
+print("WIF generation check: PASSED (compressed mainnet WIF hidden)")
 
-    print("Private key k is a random integer.")
-    print("Public key K is calculated as K = k × G on secp256k1.")
-    print(
-        "Calculating K from k is efficient, but finding k from K is "
-        "computationally infeasible because of the elliptic-curve discrete-logarithm problem."
-    )
+print("\nBasic checks: PASSED")
 
-    print_section("Exercise 2.3 — Vanity Address Experiment")
+print_section("Exercise 2.2 — Discrete Logarithm Interpretation")
 
-    expected = approximate_vanity_attempts(args.vanity_prefix)
+print("Private key k is a random integer.")
+print("Public key K is calculated as K = k × G on secp256k1.")
+print(
+    "Calculating K from k is efficient, but finding k from K is "
+    "computationally infeasible because of the elliptic-curve discrete-logarithm problem."
+)
 
-    print("Requested prefix:", args.vanity_prefix)
-    print("Approximate expected attempts:", expected)
-    print("Configured maximum attempts:", args.max_attempts)
+print_section("Exercise 2.3 — Vanity Address Experiment")
 
-    result = search_vanity_address(args.vanity_prefix, args.max_attempts)
+expected = approximate_vanity_attempts(args.vanity_prefix)
 
-    if result is None:
+print("Requested prefix:", args.vanity_prefix)
+print("Approximate expected attempts:", expected)
+ print("Configured maximum attempts:", args.max_attempts)
+
+  result = search_vanity_address(args.vanity_prefix, args.max_attempts)
+
+   if result is None:
         print(
             f"No matching address found in {args.max_attempts} attempts. "
             "This is normal because vanity search is probabilistic."
