@@ -289,3 +289,152 @@ were not implemented in this educational script.
 - **zkRollups:** aggregate Layer-2 transactions and submit a validity proof to
   a Layer-1 blockchain.
 - **Bulletproofs:** avoid trusted setup and support efficient range proofs.
+
+# Exercise 6 — HD Wallets, BIP32, BIP39, and Address Derivation
+
+## Objective
+
+The objective was to generate a test-only BIP39 mnemonic, derive its seed and
+BIP32 master material, derive Bitcoin and Ethereum BIP44 addresses, demonstrate
+determinism, and analyse HD-wallet security.
+
+## BIP39 Mnemonic and Seed
+
+A fresh 12-word test mnemonic was generated. The mnemonic itself was not saved
+in the public repository. The mnemonic was converted into a 512-bit seed using
+PBKDF2-HMAC-SHA512 with 2048 iterations and an empty passphrase.
+
+The generated seed was then used to derive BIP32 master material:
+
+`I = HMAC-SHA512(key="Bitcoin seed", data=seed)`
+
+The left 32 bytes of `I` form the master private-key material and the right
+32 bytes form the master chain code.
+
+## BIP44 Address Derivation
+
+The first five external Bitcoin addresses were derived using:
+
+`m/44'/0'/0'/0/index`
+
+The first five external Ethereum addresses were derived using:
+
+`m/44'/60'/0'/0/index`
+
+The same seed produced the same five addresses when derivation was repeated.
+This demonstrates deterministic wallet behaviour.
+
+## Entropy
+
+A 12-word mnemonic uses 128 bits of entropy and a 4-bit checksum. Although
+there are `2048^12 = 2^132` possible sequences of twelve words, only `2^128`
+represent valid BIP39 entropy values because the final bits are checksum bits.
+
+At an unrealistic brute-force speed of `10^12` attempts per second, a full
+2^128 search would still require approximately 10^19 years. A 24-word mnemonic
+uses 256 bits of entropy and is vastly stronger.
+
+## Extended Public Keys
+
+An extended public key, commonly represented as an xpub, contains public-key
+and chain-code information. It can derive non-hardened descendant public keys
+and receiving addresses without allowing spending. Therefore, an exchange can
+use an xpub on an online receiving system to generate a unique deposit address
+per customer while keeping private keys offline.
+
+However, an xpub should still be treated as privacy-sensitive because it can
+reveal the linked public address hierarchy.
+
+## Hardened and Non-Hardened Derivation
+
+An apostrophe in a derivation path indicates hardened derivation. For example:
+
+`m/44'/0'/0'`
+
+Hardened derivation cannot be performed from an xpub alone. Non-hardened
+derivation, such as the external address chain `m/44'/0'/0'/0/index`, can be
+performed from the corresponding extended public key.
+
+## Security Note
+
+All mnemonic, seed, master-key, and xpub values used in this exercise were
+temporary educational values. Sensitive values were intentionally hidden from
+the public repository and report. No real wallet seed phrase or funded wallet
+was used.
+
+# Exercise 7 — Cryptographic Attacks and Defences
+
+## Objective
+
+The objective was to simulate a birthday collision with a deliberately weak
+16-bit hash, model the economic calculation behind a majority-hashrate attack,
+demonstrate conceptual replay protection using a chain identifier, and implement
+a commit-reveal mechanism against front-running.
+
+## Birthday Collision Demonstration
+
+A mini hash function was created by taking the first 16 bits of SHA-256. Since
+there are only 2^16 = 65,536 possible outputs, a collision can be found with
+roughly the square root of the output space rather than by testing all outputs.
+
+The rough birthday-bound scale is:
+
+`sqrt(65536) = 256`
+
+The actual number of attempts varied because the inputs were random. The script
+successfully found two different inputs with the same 16-bit hash. This shows
+why cryptographic hashes such as SHA-256 use a much larger 256-bit output:
+a generic collision attack against SHA-256 would require approximately 2^128
+work, which is infeasible.
+
+## Majority Hashrate Attack
+
+A majority-hashrate attack in a Proof-of-Work network may allow an attacker to
+reorganise recent history or double-spend its own transactions. It does not give
+the attacker the private keys of other users or allow arbitrary theft.
+
+The script implements a transparent economic estimate:
+
+`required hash rate = 0.51 × network hash rate`
+
+`hourly cost = required TH/s × rental price per TH/s/day ÷ 24`
+
+Current hash-rate and rental-price inputs must be collected from dated public
+sources and cited in the final report. The implementation performs no network
+interaction or mining activity.
+
+## Replay Attack and Chain ID
+
+A conceptual legacy transaction without a chain identifier was signed and
+verified in two scenarios, representing two chains. Because the signed payload
+was identical, the signature remained valid in both scenarios.
+
+A chain-bound payload included a Chain ID. A signature created for chain ID 1
+verified for that chain but failed for chain ID 61. This models the purpose of
+EIP-155: binding a transaction signature to a particular chain to reduce
+cross-chain replay risk.
+
+The Python demonstration uses deterministic JSON and SHA-256 for clarity. Real
+Ethereum uses RLP transaction encoding, Keccak-256, and EIP-155 signature rules.
+
+## Commit-Reveal
+
+A commit-reveal protocol was implemented as:
+
+`commitment = SHA-256(action || salt)`
+
+The user first publishes only the commitment. Later, the user reveals the
+original action and secret salt. The contract verifies the reveal by recomputing
+the hash. A modified action fails verification.
+
+Commit-reveal can reduce front-running because the action is hidden during the
+commit phase. Practical systems should also include deadlines, penalties or
+refund rules for non-reveal, and a high-entropy secret salt.
+
+## Quantum and MEV Discussion
+
+Public mempools may expose pending transactions to MEV and front-running.
+Commit-reveal is one mitigation, although it is not sufficient for every
+application. Future large-scale fault-tolerant quantum computers could threaten
+ECC-based signatures, so post-quantum cryptography is important for long-term
+blockchain security.

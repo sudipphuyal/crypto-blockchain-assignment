@@ -1,0 +1,57 @@
+
+========================================================================
+Exercise 7.2 — Birthday Attack: 16-bit Mini Hash
+========================================================================
+Mini-hash output space: 2^16 = 65536
+Rule-of-thumb birthday scale sqrt(2^16): 256
+Approximate mean attempts to first collision: 320.8
+
+Collision found:
+Attempts: 282
+Input A: a46a36bf038241c81c36ded08b3257b1
+Input B: dcaa7952ee1862ac2fa7c8f142938ff3
+mini_hash_16(A): 1b87
+mini_hash_16(B): 1b87
+Collision verification: PASSED
+
+========================================================================
+Exercise 7.1 — Majority Hashrate Cost Model
+========================================================================
+This section performs only an economic estimate. It does not interact with, rent from, or attack any network.
+No current figures supplied.
+Later, use dated public sources and run the command in this format:
+python exercises/07_crypto_attacks.py --network-hashrate-eh <VALUE> --rental-usd-per-th-day <VALUE>
+For the report, cite the source, date, network hash rate, rental price, units, and calculation assumptions.
+
+========================================================================
+Exercise 7.3 — Replay Attack and Chain ID
+========================================================================
+Conceptual legacy transaction without chain ID:
+Signature valid for ETH scenario: True
+Signature valid for ETC scenario: True
+
+Conceptual chain-bound transaction:
+Signature valid for chainId=1: True
+Signature valid for chainId=61: False
+Replay-protection demonstration: PASSED
+Note: this is a conceptual model. Real EIP-155 uses Ethereum transaction encoding and Keccak-256 rather than this JSON model.
+
+========================================================================
+Exercise 7.5 — Commit-Reveal Against Front-Running
+========================================================================
+Committed action: [hidden until reveal]
+Commitment hash: d14d3359fccc8d3d2bc6eef09b1f9c414b94b4c3c8c2fe207ebaf88b3329f28e
+
+Reveal action: buy 100 tokens
+Reveal valid: True
+Modified reveal valid: False
+Commit-reveal verification: PASSED
+
+========================================================================
+Written Analysis Reminders
+========================================================================
+51% attack: an attacker with majority effective hash power may reorganise recent blocks and double-spend its own transactions, but cannot create arbitrary signatures for other users.
+MEV/front-running: public pending transactions can reveal profitable ordering opportunities. Commit-reveal can hide an action during the commit phase, but practical designs also need deadlines and rules for non-reveal behaviour.
+Quantum risk: sufficiently capable fault-tolerant quantum computers could threaten current public-key cryptography such as ECC. Post-quantum migration is an active research and standardisation area.
+
+Exercise 7 completed successfully.
