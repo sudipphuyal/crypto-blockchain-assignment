@@ -1,0 +1,41 @@
+
+========================================================================
+Exercise 2.1 — secp256k1 Key Pair and Addresses
+========================================================================
+Private key length: 32 bytes
+Private key: [hidden — test key generated at runtime]
+WIF: [hidden — run with --show-wif to display locally]
+
+Uncompressed public-key body length: 64 bytes
+Uncompressed public-key body: 404fc66929dcb5d8798af75908f81902c3486fc73a9ae5213e2ea16ececa158ef8f96a87bc72f4da6c4898c032fcde7afdc9c75632c14f707d287d6a32e2c62d
+
+Compressed public-key length: 33 bytes
+Compressed public-key: 03404fc66929dcb5d8798af75908f81902c3486fc73a9ae5213e2ea16ececa158e
+
+Bitcoin P2PKH address: 1J9q98jqam5PR8b3KaY7Guu2yFbfjdErQz
+Ethereum lowercase address: 0x631dd0e991a83bf330510c3c15239dc6399d35b7
+Ethereum EIP-55 checksum address: 0x631DD0e991a83Bf330510C3c15239dc6399D35B7
+
+Basic checks: PASSED
+
+========================================================================
+Exercise 2.2 — Discrete Logarithm Interpretation
+========================================================================
+Private key k is a random integer.
+Public key K is calculated as K = k × G on secp256k1.
+Calculating K from k is efficient, but finding k from K is computationally infeasible because of the elliptic-curve discrete-logarithm problem.
+
+========================================================================
+Exercise 2.3 — Vanity Address Experiment
+========================================================================
+Requested prefix: 1A
+Approximate expected attempts: 58
+Configured maximum attempts: 5000
+Vanity address found: 1ABmMfUmAHYUeMbh7akd1ASCiTL3XP8Y6U
+Attempts required: 13
+Elapsed time: 0.0061 seconds
+
+For report discussion:
+Approximate expected attempts for 1A: 58
+Approximate expected attempts for 1ABC: 195112
+The 1ABC estimate is much larger, so a pure-Python search may take a long time. The estimate is sufficient for the written comparison.
