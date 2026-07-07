@@ -1,0 +1,74 @@
+
+========================================================================
+Exercise 6.1 — BIP39 Mnemonic and BIP32 Master Material
+========================================================================
+Mnemonic word count: 12
+Mnemonic phrase: [hidden — temporary test-only value]
+BIP39 seed length: 64 bytes = 512 bits
+Master private-key length: 32 bytes
+Master chain-code length: 32 bytes
+Seed SHA-256 fingerprint: 736778b781ab85835160cfee6994f837cb4fff805b491a81f3fd1249e01a8baa
+Master private-key SHA-256 fingerprint: 00a8011ee4223e5e6869c94c5d3da73e4b11cd56ed0b8b17187c159496401586
+Master chain-code SHA-256 fingerprint: 343c02738b5ed8f3b0e2f7e77a78de11bdfe8e5e6e76dfae9887e1fa9e7d4a9e
+
+Mnemonic, seed, and master-material checks: PASSED
+
+========================================================================
+BIP44 Address Derivation
+========================================================================
+Bitcoin path: m/44'/0'/0'/0/index
+Bitcoin address [0]: 15rTS33fSUbEMbA7dKrzne9xEyCiJgnSgs
+Bitcoin address [1]: 1NkXrpLXxzmRoXMg58x3rXiWocVFszYAAT
+Bitcoin address [2]: 1PmULEGgLomg41EpkuLcME6WXfN5yek4zh
+Bitcoin address [3]: 1895KTwTedDUTxjYZ1XFwiKHJY98dejizi
+Bitcoin address [4]: 13zFk8VfLypw4zSV315HacMMHL87pELvcb
+
+Ethereum path: m/44'/60'/0'/0/index
+Ethereum address [0]: 0xbBEd6a10c1f556848822d00023713831F142725D
+Ethereum address [1]: 0x877210db1d63844F4570fa3B2DDe1476B15dcC9A
+Ethereum address [2]: 0xfC578de22c0E6f15a3c5A32AD113A41Eb873A4d5
+Ethereum address [3]: 0x37C9f19A008f72b8EDCa3a868070723296a1FCBB
+Ethereum address [4]: 0x54619FE532FF3B2A481198710d95AF8c790B0e3F
+
+Address derivation checks: PASSED
+
+========================================================================
+Determinism Check
+========================================================================
+Same seed produces the same Bitcoin addresses: True
+Same seed produces the same Ethereum addresses: True
+Determinism check: PASSED
+
+========================================================================
+Extended Public Key (xpub)
+========================================================================
+Account path: m/44'/0'/0'
+xpub generated: True
+xpub length: 111
+xpub value: [hidden — public-address hierarchy is privacy-sensitive]
+xpub generation check: PASSED
+
+========================================================================
+Exercise 6.2 — Entropy and Brute-Force Discussion
+========================================================================
+Assumed brute-force speed: 10^12 guesses/second
+
+12-word mnemonic:
+Raw word combinations: 2048^12 = 2^132
+Valid BIP39 entropy strength: 128 bits + 4-bit checksum
+Full 2^128 search time: 1.078e+19 years
+
+24-word mnemonic:
+Raw word combinations: 2048^24 = 2^264
+Valid BIP39 entropy strength: 256 bits + 8-bit checksum
+Full 2^256 search time: 3.669e+57 years
+
+========================================================================
+Exercise 6.3 — Hardened and Non-Hardened Derivation
+========================================================================
+Hardened path example:     m/44'/0'/0'
+Non-hardened path example: m/44'/0'/0'/0/0
+Hardened derivation requires private-key material and cannot be derived from an xpub alone.
+Non-hardened descendants can be derived from the corresponding xpub, allowing a receiving service to create new public addresses without receiving spending keys.
+
+Exercise 6 completed successfully.

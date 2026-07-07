@@ -1,3 +1,4 @@
 ecdsa==0.19.2
+mnemonic==0.21
 pycryptodome==3.23.0
 six==1.17.0
