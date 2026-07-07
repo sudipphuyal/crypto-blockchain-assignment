@@ -1,4 +1,9 @@
 ecdsa==0.19.2
+iniconfig==2.3.0
 mnemonic==0.21
+packaging==26.2
+pluggy==1.6.0
 pycryptodome==3.23.0
+Pygments==2.20.0
+pytest==9.1.1
 six==1.17.0

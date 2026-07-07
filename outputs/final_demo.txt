@@ -1,0 +1,75 @@
+
+========================================================================
+Secure Mini Blockchain — Final Demonstration
+========================================================================
+Alice address: 1M14fWp8fGEVK1SbLigRnd7PwtSKJKKyza
+Bob address:   1KwQULPPhgH4fmwzVeewDNs8sJrvV2HDvP
+Miner address: 19s8w7BHRFymwcCAQqEcMKEyMihzvLPNR6
+
+========================================================================
+Step 1 — Genesis Block
+========================================================================
+Genesis block hash: 000b76d846ec0c4f821ecbe186c45b799872eef1fa67afc976c8f47323c71593
+Genesis nonce: 2086
+Alice initial balance: 100
+Chain valid after genesis: True
+
+========================================================================
+Step 2 — Alice Sends 10 Units to Bob
+========================================================================
+Transaction ID: 4b6e20050d1e84a9affd0b91bfba685012e5e74d1b454f969e624926489d7d7c
+Transaction signature valid: True
+Pending transactions: 1
+
+========================================================================
+Step 3 — Bob Sends 3 Units Back to Alice
+========================================================================
+Transaction ID: 4a4c8bb7716ad59d8a65e25460e48a584d076f16374edfd84687896c5a127c86
+Transaction signature valid: True
+Pending transactions: 2
+
+========================================================================
+Step 4 — Miner Mines Pending Transactions
+========================================================================
+Block index: 1
+Previous block hash: 000b76d846ec0c4f821ecbe186c45b799872eef1fa67afc976c8f47323c71593
+Merkle root: 199b80b1cad7c8841976219269abe2325810d35319ee20d0e2d7bce8a4732d82
+Nonce: 4177
+Mined block hash: 000d92f5bf3c14cb42d7524948f646b3adf48a0c50bc1f10f5693a4efcf46592
+Proof-of-Work valid: True
+Block valid: True
+
+========================================================================
+Step 5 — Confirmed Balances and Chain Validity
+========================================================================
+Alice balance: 93
+Bob balance:   7
+Miner balance: 5
+Complete chain valid: True
+
+========================================================================
+Step 6 — SPV / Merkle Inclusion Proof
+========================================================================
+Transaction ID being verified: 4b6e20050d1e84a9affd0b91bfba685012e5e74d1b454f969e624926489d7d7c
+Block index: 1
+Transaction index: 1
+Merkle root: 199b80b1cad7c8841976219269abe2325810d35319ee20d0e2d7bce8a4732d82
+
+Proof steps:
+Step 1: sibling on the left -> 6866565f06d85acf4a331f9102a531e29965cec47641985fb8ae5cabd5bd4858
+Step 2: sibling on the right -> 3d7f66dfe825ac62adae54e90778e2c1f1c57f2e30855d7d0070f51dd5db77df
+
+SPV proof valid: True
+
+========================================================================
+Step 7 — Tampering Demonstration
+========================================================================
+Original Alice-to-Bob amount: 10
+Tampered Alice-to-Bob amount: 999
+Chain valid after tampering: False
+
+========================================================================
+Final Result
+========================================================================
+All required demonstrations completed successfully.
+The final tampering check intentionally leaves the in-memory chain invalid.
