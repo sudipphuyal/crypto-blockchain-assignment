@@ -1,0 +1,74 @@
+
+========================================================================
+Exercise 1.1 — SHA-256 outputs
+========================================================================
+Input: 'Vinho do Porto'
+SHA-256: c783610c65c93e160fc468e24935af0ab0a337555d6233ab47affb3580292799
+
+Input: 'vinho do porto'
+SHA-256: c9e521e058c1e01fda4bde759b70dc25d4f02161359e2e96336b7e0b030145ff
+
+Input: ''
+SHA-256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+
+
+========================================================================
+Avalanche effect
+========================================================================
+Original text: 'Vinho do Porto'
+Modified text: 'Vinho do Portu'
+Original hash: c783610c65c93e160fc468e24935af0ab0a337555d6233ab47affb3580292799
+Modified hash: 77f7d2b0aac6817b15e4d5de9481c9ffb12f6799b033ec367484e561d0c43824
+Different bits: 138 / 256
+Difference: 53.91%
+
+========================================================================
+Exercise 1.2 — Simplified Proof-of-Work
+========================================================================
+Difficulty: 1 leading hex zero(es)
+Nonce found: 5
+Attempts: 6
+Hash: 02ed8605e7774d20547b199dc4616d7620e346dd3f1a85c7d74914d25886f28a
+Elapsed time: 0.000013 seconds
+
+Difficulty: 2 leading hex zero(es)
+Nonce found: 439
+Attempts: 440
+Hash: 00a87395b73ec18db6039886449302b6f7b0c3e8c73e1712346ab244d85f8177
+Elapsed time: 0.000214 seconds
+
+Difficulty: 3 leading hex zero(es)
+Nonce found: 8352
+Attempts: 8353
+Hash: 00097940a3587f4b54643f068fdb70380354898f3dc5fbbaf222046c188e318f
+Elapsed time: 0.007375 seconds
+
+
+========================================================================
+Exercise 1.3 — Bitcoin-style double SHA-256
+========================================================================
+Serialized transaction bytes:
+b'Alice pays Bob 1 BTC | nonce=12345 | timestamp=2026-01-01'
+
+Double SHA-256, raw byte order: d6b03ab9ea39ef37aadac221c4a52c01ead07b1626d8be8b32549aeef210b5ae
+Bitcoin-style display TXID:     aeb510f2ee9a54328bbed826167bd0ea012ca5c421c2daaa37ef39eab93ab0d6
+
+========================================================================
+Exercise 1.4 — Ethereum Keccak-256
+========================================================================
+Simulated public-key body length: 64 bytes
+Keccak-256(public key): f7363c7e1636e1798b5b1fa2ad299c05a7bb4bfeba5584fa760b4abb12c65abf
+Ethereum-style address: 0xad299c05a7bb4bfeba5584fa760b4abb12c65abf
+
+========================================================================
+Part C — Bitcoin Genesis Block
+========================================================================
+Genesis block hash: 000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f
+Version: 1
+Previous block hash: 64 zeroes (there was no earlier block)
+Merkle root, human-readable display order:
+4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b
+Timestamp: 1231006505 = 2009-01-03 18:15:05 UTC
+Difficulty bits: 0x1d00ffff
+Nonce: 2083236893
+Current UTC run time: 2026-07-07T21:17:51.618230+00:00
