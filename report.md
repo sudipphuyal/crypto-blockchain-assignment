@@ -454,3 +454,5 @@ day, or about $558,547 per hour.
 This is only a theoretical extrapolation. The marketplace does not provide
 enough available SHA-256 capacity to obtain 51% of the Bitcoin network, so the
 calculation must not be interpreted as a practical attack plan.
+
+# Final Project — Secure Mini Blockchain
